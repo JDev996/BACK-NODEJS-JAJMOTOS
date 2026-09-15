@@ -4,9 +4,9 @@ import fs from 'fs';
 import path from 'path';
 
 const controllerRepuestos = {
-    createRepuesto: async (sol, res) => {
+    createRepuesto: async (req, res) => {
         try {
-            uploadSingleImage(sol, res, async (error) => {
+            uploadSingleImage(req, res, async (error) => {
                 if (error) {
                     return res.json({
                         result: 'mistake',
@@ -15,7 +15,7 @@ const controllerRepuestos = {
                     });
                 }
 
-                if (!sol.file) {
+                if (!req.file) {
                     return res.json({
                         result: 'mistake',
                         message: 'La imagen es obligatoria',
@@ -24,11 +24,11 @@ const controllerRepuestos = {
                 }
 
                 const newRepuesto = new modelRepuestos({
-                    marca: sol.body.marca,
-                    referencia: sol.body.referencia,
-                    precio: sol.body.precio,
-                    stock: sol.body.stock,
-                    imagen: sol.file.filename
+                    marca: req.body.marca,
+                    referencia: req.body.referencia,
+                    precio: req.body.precio,
+                    stock: req.body.stock,
+                    imagen: req.file.filename
                 });
 
                 const savedRepuesto = await newRepuesto.save();
@@ -48,12 +48,12 @@ const controllerRepuestos = {
         }
     },
 
-    readRepuestoId: async (sol, res) => {
+    readRepuestoId: async (req, res) => {
         try {
-            const repuestoFound = await modelRepuestos.findById(sol.params.id);
+            const repuestoFound = await modelRepuestos.findById(req.params.id);
 
             if (!repuestoFound) {
-                return res.status(404).json({
+                return res.json({
                     result: 'mistake',
                     message: 'Repuesto no encontrado',
                     data: null,
@@ -76,7 +76,7 @@ const controllerRepuestos = {
         }
     },
 
-    readRepuestos: async (sol, res) => {
+    readRepuestos: async (req, res) => {
         try {
             const allRepuestosFound = await modelRepuestos.find();
             res.json({
@@ -94,25 +94,25 @@ const controllerRepuestos = {
         }
     },
 
-    updateRepuesto: async (sol, res) => {
+    updateRepuesto: async (req, res) => {
         try {
-            const { id } = sol.params;
+            const { id } = req.params;
 
             const repuestoExistente = await modelRepuestos.findById(id);
 
             if (!repuestoExistente) {
-                if (sol.file) {
-                    fs.unlinkSync(sol.file.path);
+                if (req.file) {
+                    fs.unlinkSync(req.file.path);
                 }
 
-                return res.status(404).json({
+                return res.json({
                     result: 'mistake',
                     message: 'Repuesto no encontrado',
                     data: null,
                 });
             }
 
-            if (sol.file) {
+            if (req.file) {
                 if (repuestoExistente.imagen) {
                     const rutaImagenAntigua = path.join('imagenes', repuestoExistente.imagen);
 
@@ -123,11 +123,11 @@ const controllerRepuestos = {
             }
 
             const nuevosDatos = {
-                marca: sol.body.marca,
-                referencia: sol.body.referencia,
-                precio: sol.body.precio,
-                stock: sol.body.stock,
-                imagen: sol.file ? sol.file.filename : repuestoExistente.imagen,
+                marca: req.body.marca,
+                referencia: req.body.referencia,
+                precio: req.body.precio,
+                stock: req.body.stock,
+                imagen: req.file ? req.file.filename : repuestoExistente.imagen,
             };
 
             const repuestoActualizado = await modelRepuestos.findByIdAndUpdate(

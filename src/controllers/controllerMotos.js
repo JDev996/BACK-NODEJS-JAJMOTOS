@@ -4,9 +4,9 @@ import fs from 'fs';
 import path from 'path';
 
 const controllerMotos = {
-    createMoto: async (sol, res) => {
+    createMoto: async (req, res) => {
         try {
-            uploadSingleImage(sol, res, async (error) => {
+            uploadSingleImage(req, res, async (error) => {
                 if (error) {
                     return res.json({
                         result: 'mistake',
@@ -15,7 +15,7 @@ const controllerMotos = {
                     });
                 }
 
-                if (!sol.file) {
+                if (!req.file) {
                     return res.json({
                         result: 'mistake',
                         message: 'La imagen es obligatoria',
@@ -24,13 +24,13 @@ const controllerMotos = {
                 }
 
                 const newMoto = new modelMotos({
-                    modelo: sol.body.modelo,
-                    marca: sol.body.marca,
-                    referencia: sol.body.referencia,
-                    cilindraje: sol.body.cilindraje,
-                    precio: sol.body.precio,
-                    stock: sol.body.stock,
-                    imagen: sol.file.filename
+                    modelo: req.body.modelo,
+                    marca: req.body.marca,
+                    referencia: req.body.referencia,
+                    cilindraje: req.body.cilindraje,
+                    precio: req.body.precio,
+                    stock: req.body.stock,
+                    imagen: req.file.filename
                 });
 
                 const savedMoto = await newMoto.save();
@@ -50,12 +50,12 @@ const controllerMotos = {
         }
     },
 
-    readMotoId: async (sol, res) => {
+    readMotoId: async (req, res) => {
         try {
-            const motoFound = await modelMotos.findById(sol.params.id);
+            const motoFound = await modelMotos.findById(req.params.id);
 
             if (!motoFound) {
-                return res.status(404).json({
+                return res.json({
                     result: 'mistake',
                     message: 'Moto no encontrada',
                     data: null,
@@ -78,7 +78,7 @@ const controllerMotos = {
         }
     },
 
-    readMotos: async (sol, res) => {
+    readMotos: async (req, res) => {
         try {
             const allMotosFound = await modelMotos.find();
             res.json({
@@ -96,25 +96,25 @@ const controllerMotos = {
         }
     },
 
-    updateMoto: async (sol, res) => {
+    updateMoto: async (req, res) => {
         try {
-            const { id } = sol.params;
+            const { id } = req.params;
 
             const motoExistente = await modelMotos.findById(id);
 
             if (!motoExistente) {
-                if (sol.file) {
-                    fs.unlinkSync(sol.file.path);
+                if (req.file) {
+                    fs.unlinkSync(req.file.path);
                 }
 
-                return res.status(404).json({
+                return res.json({
                     result: 'mistake',
                     message: 'Moto no encontrada',
                     data: null,
                 });
             }
 
-            if (sol.file) {
+            if (req.file) {
                 if (motoExistente.imagen) {
                     const rutaImagenAntigua = path.join('imagenes', motoExistente.imagen);
 
@@ -125,13 +125,13 @@ const controllerMotos = {
             }
 
             const nuevosDatos = {
-                modelo: sol.body.modelo,
-                marca: sol.body.marca,
-                referencia: sol.body.referencia,
-                cilindraje: sol.body.cilindraje,
-                precio: sol.body.precio,
-                stock: sol.body.stock,
-                imagen: sol.file ? sol.file.filename : motoExistente.imagen,
+                modelo: req.body.modelo,
+                marca: req.body.marca,
+                referencia: req.body.referencia,
+                cilindraje: req.body.cilindraje,
+                precio: req.body.precio,
+                stock: req.body.stock,
+                imagen: req.file ? req.file.filename : motoExistente.imagen,
             };
 
             const motoActualizada = await modelMotos.findByIdAndUpdate(
