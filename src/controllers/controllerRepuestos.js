@@ -8,17 +8,17 @@ const controllerRepuestos = {
         try {
             uploadSingleImage(sol, res, async (error) => {
                 if (error) {
-                    return res.status(400).json({
+                    return res.json({
                         result: 'mistake',
-                        message: 'An error occurred while upload the image',
+                        message: 'Ocurrio un error al cargar la imagen',
                         data: error,
                     });
                 }
 
                 if (!sol.file) {
-                    return res.status(400).json({
+                    return res.json({
                         result: 'mistake',
-                        message: 'An image is required',
+                        message: 'La imagen es obligatoria',
                         data: null,
                     });
                 }
@@ -35,7 +35,7 @@ const controllerRepuestos = {
 
                 res.json({
                     result: 'fine',
-                    message: 'Repuesto created',
+                    message: 'Repuesto creado',
                     data: savedRepuesto,
                 });
             });
@@ -55,7 +55,7 @@ const controllerRepuestos = {
             if (!repuestoFound) {
                 return res.status(404).json({
                     result: 'mistake',
-                    message: 'Repuesto not found',
+                    message: 'Repuesto no encontrado',
                     data: null,
                 });
             }
@@ -63,14 +63,14 @@ const controllerRepuestos = {
             if (repuestoFound._id) {
                 return res.json({
                     result: 'fine',
-                    message: 'Repuesto read',
+                    message: 'Repuesto consultado',
                     data: repuestoFound,
                 });
             }
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred reading the repuesto by Id',
+                message: 'Ocurrio un error al consultar el repuesto por su identificador',
                 data: error,
             });
         }
@@ -81,14 +81,14 @@ const controllerRepuestos = {
             const allRepuestosFound = await modelRepuestos.find();
             res.json({
                 result: 'fine',
-                message: 'Repuestos read',
+                message: 'Repuestos consultados',
                 data: allRepuestosFound,
             });
 
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred reading the repuestos',
+                message: 'Ocurrio un error al consultar los repuestos',
                 data: error,
             });
         }
@@ -107,7 +107,7 @@ const controllerRepuestos = {
 
                 return res.status(404).json({
                     result: 'mistake',
-                    message: 'repuesto not found',
+                    message: 'Repuesto no encontrado',
                     data: null,
                 });
             }
@@ -138,14 +138,14 @@ const controllerRepuestos = {
 
             return res.json({
                 result: 'fine',
-                message: 'repuesto updated successfully',
+                message: 'Repuesto actualizado correctamente',
                 data: repuestoActualizado,
             });
 
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred updating the repuesto',
+                message: 'Ocurrio un error al actualizar el repuesto',
                 data: error.message || error,
             });
         }

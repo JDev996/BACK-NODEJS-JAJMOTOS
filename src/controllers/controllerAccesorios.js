@@ -8,17 +8,17 @@ const controllerAccesorios = {
         try {
             uploadSingleImage(sol, res, async (error) => {
                 if (error) {
-                    return res.status(400).json({
+                    return res.json({
                         result: 'mistake',
-                        message: 'An error occurred while upload the image',
+                        message: 'Ocurrio un error al cargar la imagen',
                         data: error,
                     });
                 }
 
                 if (!sol.file) {
-                    return res.status(400).json({
+                    return res.json({
                         result: 'mistake',
-                        message: 'An image is required',
+                        message: 'La imagen es obligatoria',
                         data: null,
                     });
                 }
@@ -35,7 +35,7 @@ const controllerAccesorios = {
 
                 res.json({
                     result: 'fine',
-                    message: 'Accesorio created',
+                    message: 'Accesorio creado',
                     data: savedAccesorio,
                 });
             });
@@ -55,20 +55,20 @@ const controllerAccesorios = {
             if (!accesorioFound) {
                 return res.status(404).json({
                     result: 'mistake',
-                    message: 'Accesorio not found',
+                    message: 'Accesorio no encontrado',
                     data: null,
                 });
             }
 
             return res.json({
                 result: 'fine',
-                message: 'Accesorio read',
+                message: 'Accesorio consultado',
                 data: accesorioFound,
             });
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred reading the accesorio by Id',
+                message: 'Ocurrio un error al consultar el accesorio por su identificador',
                 data: error,
             });
         }
@@ -79,14 +79,14 @@ const controllerAccesorios = {
             const allAccesoriosFound = await modelAccesorios.find();
             res.json({
                 result: 'fine',
-                message: 'Accesorios read',
+                message: 'Accesorios consultados',
                 data: allAccesoriosFound,
             });
 
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred reading the accesorios',
+                message: 'Ocurrio un error al consultar los accesorios',
                 data: error,
             });
         }
@@ -104,7 +104,7 @@ const controllerAccesorios = {
 
                 return res.status(404).json({
                     result: 'mistake',
-                    message: 'accesorio not found',
+                    message: 'Accesorio no encontrado',
                     data: null,
                 });
             }
@@ -133,14 +133,14 @@ const controllerAccesorios = {
 
             return res.json({
                 result: 'fine',
-                message: 'accesorio updated successfully',
+                message: 'Accesorio actualizado correctamente',
                 data: accesorioActualizado,
             });
 
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred updating the accesorio',
+                message: 'Ocurrio un error al actualizar el accesorio',
                 data: error.message || error,
             });
         }
