@@ -8,17 +8,17 @@ const controllerMotos = {
         try {
             uploadSingleImage(sol, res, async (error) => {
                 if (error) {
-                    return res.status(400).json({
+                    return res.json({
                         result: 'mistake',
-                        message: 'An error occurred while upload the image',
+                        message: 'Ocurrio un error al cargar la imagen',
                         data: error,
                     });
                 }
 
                 if (!sol.file) {
-                    return res.status(400).json({
+                    return res.json({
                         result: 'mistake',
-                        message: 'An image is required',
+                        message: 'La imagen es obligatoria',
                         data: null,
                     });
                 }
@@ -37,7 +37,7 @@ const controllerMotos = {
 
                 res.json({
                     result: 'fine',
-                    message: 'Moto created',
+                    message: 'Moto creada',
                     data: savedMoto,
                 });
             });
@@ -57,7 +57,7 @@ const controllerMotos = {
             if (!motoFound) {
                 return res.status(404).json({
                     result: 'mistake',
-                    message: 'Moto not found',
+                    message: 'Moto no encontrada',
                     data: null,
                 });
             }
@@ -65,14 +65,14 @@ const controllerMotos = {
             if (motoFound._id) {
                 return res.json({
                     result: 'fine',
-                    message: 'Moto read',
+                    message: 'Moto consultada',
                     data: motoFound,
                 });
             }
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred reading the moto by Id',
+                message: 'Ocurrio un error al consultar la moto por su identificador',
                 data: error,
             });
         }
@@ -83,14 +83,14 @@ const controllerMotos = {
             const allMotosFound = await modelMotos.find();
             res.json({
                 result: 'fine',
-                message: 'Motos read',
+                message: 'Motos consultadas',
                 data: allMotosFound,
             });
 
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred reading the motos',
+                message: 'Ocurrio un error al consultar las motos',
                 data: error,
             });
         }
@@ -109,7 +109,7 @@ const controllerMotos = {
 
                 return res.status(404).json({
                     result: 'mistake',
-                    message: 'moto not found',
+                    message: 'Moto no encontrada',
                     data: null,
                 });
             }
@@ -142,14 +142,14 @@ const controllerMotos = {
 
             return res.json({
                 result: 'fine',
-                message: 'moto updated successfully',
+                message: 'Moto actualizada correctamente',
                 data: motoActualizada,
             });
 
         } catch (error) {
             res.json({
                 result: 'mistake',
-                message: 'An error occurred updating the moto',
+                message: 'Ocurrio un error al actualizar la moto',
                 data: error.message || error,
             });
         }

@@ -15,7 +15,7 @@ const contUsuario = {
                     });
                 }
                 if (!req.file) {
-                    return res.status(400).json({
+                    return res.json({
                         mensaje: 'La imagen es obligatoria',
                         datos: null
                     });
