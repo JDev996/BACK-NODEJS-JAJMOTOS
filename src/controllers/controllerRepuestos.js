@@ -60,13 +60,11 @@ const controllerRepuestos = {
                 });
             }
 
-            if (repuestoFound._id) {
-                return res.json({
-                    result: 'fine',
-                    message: 'Repuesto consultado',
-                    data: repuestoFound,
-                });
-            }
+            return res.json({
+                result: 'fine',
+                message: 'Repuesto consultado',
+                data: repuestoFound,
+            });
         } catch (error) {
             res.json({
                 result: 'mistake',
@@ -112,13 +110,11 @@ const controllerRepuestos = {
                 });
             }
 
-            if (req.file) {
-                if (repuestoExistente.imagen) {
-                    const rutaImagenAntigua = path.join('imagenes', repuestoExistente.imagen);
+            if (req.file && repuestoExistente.imagen) {
+                const rutaImagenAntigua = path.join('imagenes', repuestoExistente.imagen);
 
-                    if (fs.existsSync(rutaImagenAntigua)) {
-                        fs.unlinkSync(rutaImagenAntigua);
-                    }
+                if (fs.existsSync(rutaImagenAntigua)) {
+                    fs.unlinkSync(rutaImagenAntigua);
                 }
             }
 
@@ -133,7 +129,7 @@ const controllerRepuestos = {
             const repuestoActualizado = await modelRepuestos.findByIdAndUpdate(
                 id,
                 nuevosDatos,
-                { new: true }
+                { new: true, runValidators: true }
             );
 
             return res.json({
@@ -146,6 +142,43 @@ const controllerRepuestos = {
             res.json({
                 result: 'mistake',
                 message: 'Ocurrio un error al actualizar el repuesto',
+                data: error.message || error,
+            });
+        }
+    },
+
+    deleteRepuesto: async (req, res) => {
+        try {
+            const repuestoToDelete = await modelRepuestos.findByIdAndDelete(
+                req.params.id
+            );
+
+            if (!repuestoToDelete) {
+                return res.json({
+                    result: 'mistake',
+                    message: 'Repuesto no encontrado para eliminar',
+                    data: null,
+                });
+            }
+
+            if (repuestoToDelete.imagen) {
+                const rutaImagen = path.join('imagenes', repuestoToDelete.imagen);
+
+                if (fs.existsSync(rutaImagen)) {
+                    fs.unlinkSync(rutaImagen);
+                }
+            }
+
+            return res.json({
+                result: 'fine',
+                message: 'Repuesto eliminado correctamente',
+                data: null,
+            });
+
+        } catch (error) {
+            res.json({
+                result: 'mistake',
+                message: 'Ocurrio un error al eliminar el repuesto',
                 data: error.message || error,
             });
         }
