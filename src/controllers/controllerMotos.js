@@ -155,6 +155,43 @@ const controllerMotos = {
         }
     },
 
+    deleteMoto: async (req, res) => {
+        try {
+            const motoToDelete = await modelMotos.findByIdAndDelete(
+                req.params.id
+            );
+
+            if (!motoToDelete) {
+                return res.json({
+                    result: 'mistake',
+                    message: 'Moto no encontrada para eliminar',
+                    data: null,
+                });
+            }
+
+            if (motoToDelete.imagen) {
+                const rutaImagen = path.join('imagenes', motoToDelete.imagen);
+
+                if (fs.existsSync(rutaImagen)) {
+                    fs.unlinkSync(rutaImagen);
+                }
+            }
+
+            return res.json({
+                result: 'fine',
+                message: 'Moto eliminada correctamente',
+                data: null,
+            });
+
+        } catch (error) {
+            res.json({
+                result: 'mistake',
+                message: 'Ocurrio un error al eliminar la moto',
+                data: error.message || error,
+            });
+        }
+    },
+
 }
 
 export default controllerMotos;

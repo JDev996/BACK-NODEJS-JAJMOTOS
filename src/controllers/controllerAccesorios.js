@@ -146,6 +146,43 @@ const controllerAccesorios = {
         }
     },
 
+    deleteAccesorio: async (req, res) => {
+        try {
+            const accesorioToDelete = await modelAccesorios.findByIdAndDelete(
+                req.params.id
+            );
+
+            if (!accesorioToDelete) {
+                return res.json({
+                    result: 'mistake',
+                    message: 'Accesorio no encontrado para eliminar',
+                    data: null,
+                });
+            }
+
+            if (accesorioToDelete.imagen) {
+                const rutaImagen = path.join('imagenes', accesorioToDelete.imagen);
+
+                if (fs.existsSync(rutaImagen)) {
+                    fs.unlinkSync(rutaImagen);
+                }
+            }
+
+            return res.json({
+                result: 'fine',
+                message: 'Accesorio eliminado correctamente',
+                data: null,
+            });
+
+        } catch (error) {
+            res.json({
+                result: 'mistake',
+                message: 'Ocurrio un error al eliminar el accesorio',
+                data: error.message || error,
+            });
+        }
+    },
+
 };
 
 export default controllerAccesorios;

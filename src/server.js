@@ -4,6 +4,7 @@ import routerUsuario from './routes/routerUsuario.js';
 import routerAccesorios from './routes/routerAccesorios.js';
 import routerRespuestos from './routes/routerRespuestos.js';
 import routerMotos from './routes/routerMotos.js';
+import routerVentas from './routes/routerVentas.js';
 
 const app = express();
 app.use(morgan('con'));
@@ -12,6 +13,7 @@ app.use('/usuarios', routerUsuario);
 app.use('/accesorios', routerAccesorios);
 app.use('/respuestos', routerRespuestos);
 app.use('/motos', routerMotos);
+app.use('/ventas', routerVentas);
 app.get('/', (req, res) => {
 
     res.status(404).send("Not Found");
