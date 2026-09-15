@@ -4,9 +4,9 @@ import fs from 'fs';
 import path from 'path';
 
 const controllerAccesorios = {
-    createAccesorio: async (sol, res) => {
+    createAccesorio: async (req, res) => {
         try {
-            uploadSingleImage(sol, res, async (error) => {
+            uploadSingleImage(req, res, async (error) => {
                 if (error) {
                     return res.json({
                         result: 'mistake',
@@ -15,7 +15,7 @@ const controllerAccesorios = {
                     });
                 }
 
-                if (!sol.file) {
+                if (!req.file) {
                     return res.json({
                         result: 'mistake',
                         message: 'La imagen es obligatoria',
@@ -24,11 +24,11 @@ const controllerAccesorios = {
                 }
 
                 const newAccesorio = new modelAccesorios({
-                    marca: sol.body.marca,
-                    referencia: sol.body.referencia,
-                    precio: sol.body.precio,
-                    stock: sol.body.stock,
-                    imagen: sol.file.filename
+                    marca: req.body.marca,
+                    referencia: req.body.referencia,
+                    precio: req.body.precio,
+                    stock: req.body.stock,
+                    imagen: req.file.filename
                 });
 
                 const savedAccesorio = await newAccesorio.save();
@@ -48,12 +48,12 @@ const controllerAccesorios = {
         }
     },
 
-    readAccesorioId: async (sol, res) => {
+    readAccesorioId: async (req, res) => {
         try {
-            const accesorioFound = await modelAccesorios.findById(sol.params.id);
+            const accesorioFound = await modelAccesorios.findById(req.params.id);
 
             if (!accesorioFound) {
-                return res.status(404).json({
+                return res.json({
                     result: 'mistake',
                     message: 'Accesorio no encontrado',
                     data: null,
@@ -74,7 +74,7 @@ const controllerAccesorios = {
         }
     },
 
-    readAccesorios: async (sol, res) => {
+    readAccesorios: async (req, res) => {
         try {
             const allAccesoriosFound = await modelAccesorios.find();
             res.json({
@@ -92,24 +92,24 @@ const controllerAccesorios = {
         }
     },
 
-    updateAccesorio: async (sol, res) => {
+    updateAccesorio: async (req, res) => {
         try {
-            const { id } = sol.params;
+            const { id } = req.params;
             const accesorioExistente = await modelAccesorios.findById(id);
 
             if (!accesorioExistente) {
-                if (sol.file) {
-                    fs.unlinkSync(sol.file.path);
+                if (req.file) {
+                    fs.unlinkSync(req.file.path);
                 }
 
-                return res.status(404).json({
+                return res.json({
                     result: 'mistake',
                     message: 'Accesorio no encontrado',
                     data: null,
                 });
             }
 
-            if (sol.file && accesorioExistente.imagen) {
+            if (req.file && accesorioExistente.imagen) {
                 const rutaImagenAntigua = path.join('imagenes', accesorioExistente.imagen);
 
                 if (fs.existsSync(rutaImagenAntigua)) {
@@ -118,11 +118,11 @@ const controllerAccesorios = {
             }
 
             const nuevosDatos = {
-                marca: sol.body.marca,
-                referencia: sol.body.referencia,
-                precio: sol.body.precio,
-                stock: sol.body.stock,
-                imagen: sol.file ? sol.file.filename : accesorioExistente.imagen,
+                marca: req.body.marca,
+                referencia: req.body.referencia,
+                precio: req.body.precio,
+                stock: req.body.stock,
+                imagen: req.file ? req.file.filename : accesorioExistente.imagen,
             };
 
             const accesorioActualizado = await modelAccesorios.findByIdAndUpdate(

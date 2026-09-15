@@ -48,7 +48,7 @@ const contUsuario = {
         try {
             const usuarioFound = await modelUsuario.findById(req.params.id);
             if (!usuarioFound) {
-                return res.status(404).json({
+                return res.json({
                     mensaje: 'Usuario no encontrado',
                     datos: null,
                 });
@@ -75,7 +75,7 @@ const contUsuario = {
                 datos: usuarios,
             });
         } catch (error) {
-            return res.status(500).json({
+            return res.json({
                 mensaje: 'Ocurrio un error encontrando los Usuarios',
                 datos: error,
             });
@@ -91,7 +91,7 @@ const contUsuario = {
                 if (req.file) {
                     fs.unlinkSync(req.file.path);
                 }
-                return res.status(404).json({
+                return res.json({
                     mensaje: 'Usuario no encontrado',
                     datos: null,
                 });
@@ -138,7 +138,7 @@ const contUsuario = {
             );
 
             if (!usuarioToDelete) {
-                return res.status(404).json({
+                return res.json({
                     mensaje: "Usuario no encontrado para eliminar.",
                     datos: null,
                 })
