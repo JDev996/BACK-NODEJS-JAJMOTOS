@@ -135,4 +135,5 @@ esta conectado a la base de datos
 23. antes de crear mi controlador de inicio de sesion debo crear una funcion para generar un token y otra para verfircar el token esto se realiza con el fin de que cuando el usuario se loguee su sesion no quede abierta por siempre sin dar cerrar sesion sino que tenga un tiempo limite de inactividad se puede crear en otra carpeta para tener una mejor trazabilidad y se le puede asignar un nombre correspondiente a la creacion del token.
 
 
----- run ----
+---- run ---
+--- prueba 3 ---
