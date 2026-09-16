@@ -1,12 +1,6 @@
 import { Schema, model } from 'mongoose';
 
 const esquemaMoto = new Schema({
-id: {
-    type: String,
-    required: false,
-    trim: true,
-    unique: true
-},
 modelo: {
     type: String,
     required: true,
@@ -38,7 +32,7 @@ stock: {
     min: 0,
     default: 0
 },
-imagen: {
+Foto: {
     type: String,
     required: true,
     trim: true

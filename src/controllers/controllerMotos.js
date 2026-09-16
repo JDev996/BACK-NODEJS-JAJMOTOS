@@ -30,7 +30,7 @@ const controllerMotos = {
                     cilindraje: req.body.cilindraje,
                     precio: req.body.precio,
                     stock: req.body.stock,
-                    imagen: req.file.filename
+                    Foto: req.file.filename
                 });
 
                 const savedMoto = await newMoto.save();
@@ -115,8 +115,8 @@ const controllerMotos = {
             }
 
             if (req.file) {
-                if (motoExistente.imagen) {
-                    const rutaImagenAntigua = path.join('imagenes', motoExistente.imagen);
+                if (motoExistente.Foto) {
+                    const rutaImagenAntigua = path.join('imagenes', motoExistente.Foto);
 
                     if (fs.existsSync(rutaImagenAntigua)) {
                         fs.unlinkSync(rutaImagenAntigua);
@@ -131,7 +131,7 @@ const controllerMotos = {
                 cilindraje: req.body.cilindraje,
                 precio: req.body.precio,
                 stock: req.body.stock,
-                imagen: req.file ? req.file.filename : motoExistente.imagen,
+                Foto: req.file ? req.file.filename : motoExistente.Foto,
             };
 
             const motoActualizada = await modelMotos.findByIdAndUpdate(
@@ -169,8 +169,8 @@ const controllerMotos = {
                 });
             }
 
-            if (motoToDelete.imagen) {
-                const rutaImagen = path.join('imagenes', motoToDelete.imagen);
+            if (motoToDelete.Foto) {
+                const rutaImagen = path.join('imagenes', motoToDelete.Foto);
 
                 if (fs.existsSync(rutaImagen)) {
                     fs.unlinkSync(rutaImagen);

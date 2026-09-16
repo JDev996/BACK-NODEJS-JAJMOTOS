@@ -7,5 +7,6 @@ routerMotos.post('/', controllerMotos.createMoto);
 routerMotos.get('/:id', controllerMotos.readMotoId);
 routerMotos.get('/', controllerMotos.readMotos);
 routerMotos.put('/:id', uploadSingleImage, controllerMotos.updateMoto);
+routerMotos.delete('/:id', controllerMotos.deleteMoto);
 
 export default routerMotos;
