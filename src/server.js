@@ -7,7 +7,7 @@ import routerMotos from './routes/routerMotos.js';
 import routerVentas from './routes/routerVentas.js';
 
 const app = express();
-app.use(morgan('con'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use('/usuarios', routerUsuario);
 app.use('/accesorios', routerAccesorios);
