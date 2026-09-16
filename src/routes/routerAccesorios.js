@@ -7,5 +7,6 @@ routerAccesorios.post('/', controllerAccesorios.createAccesorio);
 routerAccesorios.get('/:id', controllerAccesorios.readAccesorioId);
 routerAccesorios.get('/', controllerAccesorios.readAccesorios);
 routerAccesorios.put('/:id', uploadSingleImage, controllerAccesorios.updateAccesorio);
+routerAccesorios.delete('/:id', controllerAccesorios.deleteAccesorio);
 
 export default routerAccesorios;
