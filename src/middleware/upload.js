@@ -15,6 +15,6 @@ const storage = multer.diskStorage({
 
 export const uploadSingleImage = multer({
     storage
-}).single('Foto');
+}).single('foto'); 
 
 export const uploadImage = uploadSingleImage;

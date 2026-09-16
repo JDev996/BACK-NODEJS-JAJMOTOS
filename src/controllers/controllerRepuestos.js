@@ -28,7 +28,7 @@ const controllerRepuestos = {
                     referencia: req.body.referencia,
                     precio: req.body.precio,
                     stock: req.body.stock,
-                    imagen: req.file.filename
+                    foto: req.file.filename
                 });
 
                 const savedRepuesto = await newRepuesto.save();
