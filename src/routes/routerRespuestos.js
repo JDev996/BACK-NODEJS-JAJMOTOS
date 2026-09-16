@@ -7,5 +7,6 @@ routerRespuestos.post('/', controllerRepuestos.createRepuesto);
 routerRespuestos.get('/:id', controllerRepuestos.readRepuestoId);
 routerRespuestos.get('/', controllerRepuestos.readRepuestos);
 routerRespuestos.put('/:id', uploadSingleImage, controllerRepuestos.updateRepuesto);
+routerRespuestos.delete('/:id', controllerRepuestos.deleteRepuesto);
 
 export default routerRespuestos;

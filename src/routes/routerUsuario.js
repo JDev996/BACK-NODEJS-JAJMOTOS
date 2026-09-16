@@ -7,5 +7,6 @@ routerUsuario.post('/', controllerUsuario.createUsuario);
 routerUsuario.get('/:id', controllerUsuario.readUsuario);
 routerUsuario.get('/', controllerUsuario.readUsuarios);
 routerUsuario.put('/:id', uploadSingleImage, controllerUsuario.updateUsuario);
+routerUsuario.delete('/:id', controllerUsuario.deleteUsuario);
 
 export default routerUsuario;
