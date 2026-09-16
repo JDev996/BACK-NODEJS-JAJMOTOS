@@ -28,7 +28,7 @@ const controllerAccesorios = {
                     referencia: req.body.referencia,
                     precio: req.body.precio,
                     stock: req.body.stock,
-                    imagen: req.file.filename
+                    Foto: req.file.filename
                 });
 
                 const savedAccesorio = await newAccesorio.save();
@@ -109,8 +109,8 @@ const controllerAccesorios = {
                 });
             }
 
-            if (req.file && accesorioExistente.imagen) {
-                const rutaImagenAntigua = path.join('imagenes', accesorioExistente.imagen);
+            if (req.file && accesorioExistente.Foto) {
+                const rutaImagenAntigua = path.join('imagenes', accesorioExistente.Foto);
 
                 if (fs.existsSync(rutaImagenAntigua)) {
                     fs.unlinkSync(rutaImagenAntigua);
@@ -122,7 +122,7 @@ const controllerAccesorios = {
                 referencia: req.body.referencia,
                 precio: req.body.precio,
                 stock: req.body.stock,
-                imagen: req.file ? req.file.filename : accesorioExistente.imagen,
+                Foto: req.file ? req.file.filename : accesorioExistente.Foto,
             };
 
             const accesorioActualizado = await modelAccesorios.findByIdAndUpdate(
@@ -160,8 +160,8 @@ const controllerAccesorios = {
                 });
             }
 
-            if (accesorioToDelete.imagen) {
-                const rutaImagen = path.join('imagenes', accesorioToDelete.imagen);
+            if (accesorioToDelete.Foto) {
+                const rutaImagen = path.join('imagenes', accesorioToDelete.Foto);
 
                 if (fs.existsSync(rutaImagen)) {
                     fs.unlinkSync(rutaImagen);
