@@ -1,12 +1,6 @@
 import { Schema, model } from 'mongoose';
 
 const esquemaAccesorio = new Schema({
-id: {
-    type: String,
-    required: false,
-    trim: true,
-    unique: true
-},
 marca: {
     type: String,
     required: true,
@@ -29,7 +23,7 @@ stock: {
     min: 0,
     default: 0
 },
-imagen: {
+Foto: {
     type: String,
     required: true,
     trim: true
