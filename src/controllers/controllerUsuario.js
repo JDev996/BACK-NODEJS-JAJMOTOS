@@ -1,3 +1,4 @@
+import { Admin } from 'mongodb';
 import { uploadImage } from '../middleware/upload.js';
 import modelUsuario from '../models/modelUsuario.js';
 import fs from 'fs';
@@ -32,7 +33,12 @@ const contUsuario = {
                 });
 
                 const saveUsuario = await newUsuario.save();
-
+                
+                    return res.json({
+                    mensaje: `usuario ${saveUsuario.rol} creado satisfactoriamente`,
+                    datos: saveUsuario
+                });
+                
                 return res.json({
                     mensaje: 'Usuario creado satisfactoriamente',
                     datos: saveUsuario

@@ -31,9 +31,9 @@ const esquemaUsuario = new Schema({
         type: String,
         required: true,
         match: [
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%?&*])[A-Za-z\d$@$!%?&*]{8,15}$/,
-            'La contraseña debe tener 8-15 caracteres, una mayúscula, una minúscula, un número y un carácter especial'
-        ]
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%?&*])[A-Za-z\d$@$!%?&*]{8,15}$/,
+        'La contraseña debe tener 8-15 caracteres, una mayúscula, una minúscula, un número y un carácter especial'
+    ]
     },
     foto: {
         type: String,
