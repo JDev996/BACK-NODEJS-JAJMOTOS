@@ -110,8 +110,8 @@ const controllerRepuestos = {
                 });
             }
 
-            if (req.file && repuestoExistente.foto) {
-                const rutaImagenAntigua = path.join('imagenes', repuestoExistente.foto);
+            if (req.file && repuestoExistente.Foto) {
+                const rutaImagenAntigua = path.join('imagenes', repuestoExistente.Foto);
 
                 if (fs.existsSync(rutaImagenAntigua)) {
                     fs.unlinkSync(rutaImagenAntigua);
@@ -123,7 +123,7 @@ const controllerRepuestos = {
                 referencia: req.body.referencia,
                 precio: req.body.precio,
                 stock: req.body.stock,
-                foto: req.file ? req.file.filename : repuestoExistente.foto,
+                imagen: req.file ? req.file.filename : repuestoExistente.Foto,
             };
 
             const repuestoActualizado = await modelRepuestos.findByIdAndUpdate(
@@ -161,8 +161,8 @@ const controllerRepuestos = {
                 });
             }
 
-            if (repuestoToDelete.foto) {
-                const rutaImagen = path.join('imagenes', repuestoToDelete.foto);
+            if (repuestoToDelete.Foto) {
+                const rutaImagen = path.join('imagenes', repuestoToDelete.Foto);
 
                 if (fs.existsSync(rutaImagen)) {
                     fs.unlinkSync(rutaImagen);
