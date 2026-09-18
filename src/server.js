@@ -5,11 +5,13 @@ import routerAccesorios from './routes/routerAccesorios.js';
 import routerRespuestos from './routes/routerRespuestos.js';
 import routerMotos from './routes/routerMotos.js';
 import routerVentas from './routes/routerVentas.js';
+import loginRouter from './routes/routerLogin.js';  
 
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use('/usuarios', routerUsuario);
+app.use('/login', loginRouter); 
 app.use('/accesorios', routerAccesorios);
 app.use('/respuestos', routerRespuestos);
 app.use('/motos', routerMotos);
