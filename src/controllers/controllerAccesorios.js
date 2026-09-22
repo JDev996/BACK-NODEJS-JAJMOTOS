@@ -5,24 +5,24 @@ import path from 'path';
 
 const controllerAccesorios = {
     createAccesorio: async (req, res) => {
-        try {
-            uploadSingleImage(req, res, async (error) => {
-                if (error) {
-                    return res.json({
-                        result: 'mistake',
-                        message: 'Ocurrio un error al cargar la imagen',
-                        data: error,
-                    });
-                }
+        uploadSingleImage(req, res, async (error) => {
+            if (error) {
+                return res.json({
+                    result: 'mistake',
+                    message: 'Ocurrio un error al cargar la imagen',
+                    data: error,
+                });
+            }
 
-                if (!req.file) {
-                    return res.json({
-                        result: 'mistake',
-                        message: 'La imagen es obligatoria',
-                        data: null,
-                    });
-                }
+            if (!req.file) {
+                return res.json({
+                    result: 'mistake',
+                    message: 'La imagen es obligatoria',
+                    data: null,
+                });
+            }
 
+            try {
                 const newAccesorio = new modelAccesorios({
                     marca: req.body.marca,
                     referencia: req.body.referencia,
@@ -38,14 +38,14 @@ const controllerAccesorios = {
                     message: 'Accesorio creado',
                     data: savedAccesorio,
                 });
-            });
-        } catch (error) {
-            res.json({
-                result: 'mistake',
-                message: 'An error occurred creating the accesorio',
-                data: error,
-            });
-        }
+            } catch (error) {
+                res.json({
+                    result: 'mistake',
+                    message: 'Ocurrio un error al guardar el accesorio',
+                    data: error.message || error,
+                });
+            }
+        });
     },
 
     readAccesorioId: async (req, res) => {
