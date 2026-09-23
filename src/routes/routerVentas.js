@@ -1,11 +1,12 @@
 import { Router } from "express";
 import controllerVentas from '../controllers/controllerVentas.js';
+import { autenticar, autorizar } from '../middleware/authentication.js';
 
 const routerVentas = Router();
-routerVentas.post('/', controllerVentas.createVenta);
-routerVentas.get('/:id', controllerVentas.readVenta);
-routerVentas.get('/', controllerVentas.readVentas);
-routerVentas.put('/:id', controllerVentas.updateVenta);
-routerVentas.delete('/:id', controllerVentas.deleteVenta);
+routerVentas.post('/', autenticar, autorizar('admin'), controllerVentas.createVenta);
+routerVentas.get('/:id', autenticar, controllerVentas.readVenta);
+routerVentas.get('/', autenticar, controllerVentas.readVentas);
+routerVentas.put('/:id', autenticar, autorizar('admin'), controllerVentas.updateVenta);
+routerVentas.delete('/:id', autenticar, autorizar('admin'), controllerVentas.deleteVenta);
 
 export default routerVentas;

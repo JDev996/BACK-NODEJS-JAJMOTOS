@@ -1,8 +1,8 @@
-import { Admin } from 'mongodb';
 import { uploadImage } from '../middleware/upload.js';
 import modelUsuario from '../models/modelUsuario.js';
 import fs from 'fs';
 import path from 'path';
+import bcrypt from 'bcryptjs';
 
 const contUsuario = {
 
@@ -22,27 +22,25 @@ const contUsuario = {
             }
 
             try {
+                const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
                 const newUsuario = new modelUsuario({
                     nombre: req.body.nombre,
                     apellido: req.body.apellido,
                     correo: req.body.correo,
                     edad: req.body.edad,
                     rol: req.body.rol,
-                    password: req.body.password,
-                    foto: req.file.filename
+                    password: hashedPassword,
+                    Foto: req.file.filename
                 });
 
                 const saveUsuario = await newUsuario.save();
-                
-                    return res.json({
+
+                return res.json({
                     mensaje: `usuario ${saveUsuario.rol} creado satisfactoriamente`,
                     datos: saveUsuario
                 });
-                
-                return res.json({
-                    mensaje: 'Usuario creado satisfactoriamente',
-                    datos: saveUsuario
-                });
+
             } catch (err) {
                 return res.json({
                     mensaje: 'Ocurrio un error creando el Usuario',

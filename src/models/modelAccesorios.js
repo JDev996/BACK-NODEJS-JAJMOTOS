@@ -10,7 +10,7 @@ referencia: {
     type: String,
     required: true,
     trim: true,
-    unique: true
+    
 },
 precio: {
     type: Number,
