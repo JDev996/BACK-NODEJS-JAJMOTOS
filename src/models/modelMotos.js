@@ -14,7 +14,7 @@ marca: {
 referencia: {
     type: String,
     required: true,
-    trim: true
+
 },
 cilindraje: {
     type: Number,

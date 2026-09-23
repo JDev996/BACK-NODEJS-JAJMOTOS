@@ -1,12 +1,13 @@
 import { Router } from "express";
 import controllerUsuario from '../controllers/controllerUsuario.js';
 import { uploadSingleImage } from '../middleware/upload.js';
+import { autenticar, autorizar } from '../middleware/authentication.js';
 
 const routerUsuario = Router();
-routerUsuario.post('/', controllerUsuario.createUsuario);
-routerUsuario.get('/:id', controllerUsuario.readUsuario);
-routerUsuario.get('/', controllerUsuario.readUsuarios);
-routerUsuario.put('/:id', uploadSingleImage, controllerUsuario.updateUsuario);
-routerUsuario.delete('/:id', controllerUsuario.deleteUsuario);
+routerUsuario.post('/', autenticar, autorizar('admin'), controllerUsuario.createUsuario);
+routerUsuario.get('/:id', autenticar, autorizar('admin'), controllerUsuario.readUsuario);
+routerUsuario.get('/', autenticar, autorizar('admin'), controllerUsuario.readUsuarios);
+routerUsuario.put('/:id', autenticar, autorizar('admin'), uploadSingleImage, controllerUsuario.updateUsuario);
+routerUsuario.delete('/:id', autenticar, autorizar('admin'), controllerUsuario.deleteUsuario);
 
 export default routerUsuario;

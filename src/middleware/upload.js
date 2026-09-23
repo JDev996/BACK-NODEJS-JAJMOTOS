@@ -3,18 +3,20 @@ import path from "path";
 
 const storage = multer.diskStorage({
 
-    destination: 'imagenes',
-    filename: (req, file, picture) => {
+    destination: (req, file, cb) => {
+        cb(null, 'imagenes');
+    },
+    filename: (req, file, cb) => {
         const extention = path.extname(file.originalname);
         const onlyName = path.basename(file.originalname, extention).replace(/\s+/g, '-').toLowerCase();
         const timeStamp = new Date().toISOString().replace(/[-:.TZ]/g, '');
         const fullName = `${onlyName}${timeStamp}${extention}`;
-        picture(null, fullName);
+        cb(null, fullName);
     }
 });
 
 export const uploadSingleImage = multer({
     storage
-}).single('foto'); 
+}).single('Foto'); 
 
 export const uploadImage = uploadSingleImage;

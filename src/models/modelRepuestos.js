@@ -22,7 +22,7 @@ stock: {
     min: 0,
     default: 0
 },
-foto: {
+Foto: {
     type: String,
     required: true,
     trim: true
